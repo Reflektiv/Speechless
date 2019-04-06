@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.421
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28729.10
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01 - Core", "01 - Core", "{1126BA4D-5F34-424A-B55C-6533E3DF17A1}"
 EndProject
@@ -23,33 +23,31 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02 - Migrations", "02 - Mig
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03 - Services", "03 - Services", "{150B94BF-EC59-4655-B49D-9B069039A470}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01 - Android", "01 - Android", "{3C961887-539B-4D73-9369-3C378A37DED9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Speechless.Core.Domain.Contracts", "Speechless.Core.Domain.Contracts\Speechless.Core.Domain.Contracts.csproj", "{BB483955-9B15-4FAC-8B6B-0610DB13A075}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02 - iOS", "02 - iOS", "{DC1C1DBA-82EF-4E41-A1B2-C970E42F3CAA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Speechless.Core.Domain.Concretes", "Speechless.Core.Domain.Concretes\Speechless.Core.Domain.Concretes.csproj", "{B17F87F2-EBE6-46FC-B881-481E6FCFF85D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Speechless.Core.Domain.Contracts", "Speechless.Core.Domain.Contracts\Speechless.Core.Domain.Contracts.csproj", "{BB483955-9B15-4FAC-8B6B-0610DB13A075}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Speechless.Core.Repositories.Contracts", "Speechless.Core.Repositories.Contracts\Speechless.Core.Repositories.Contracts.csproj", "{5B97219C-BEC6-4858-B4EC-2EA71FDDF024}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Speechless.Core.Domain.Concretes", "Speechless.Core.Domain.Concretes\Speechless.Core.Domain.Concretes.csproj", "{B17F87F2-EBE6-46FC-B881-481E6FCFF85D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Speechless.Core.Services.Contracts", "Speechless.Core.Services.Contracts\Speechless.Core.Services.Contracts.csproj", "{17964490-BA75-4D67-90A8-69861FEFE53C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Speechless.Core.Repositories.Contracts", "Speechless.Core.Repositories.Contracts\Speechless.Core.Repositories.Contracts.csproj", "{5B97219C-BEC6-4858-B4EC-2EA71FDDF024}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Speechless.Infrastucture.Repositories.EntityFramework", "Speechless.Infrastucture.Repositories.EntityFramework\Speechless.Infrastucture.Repositories.EntityFramework.csproj", "{353D2C04-31F0-425E-9042-2181FF92A104}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Speechless.Core.Services.Contracts", "Speechless.Core.Services.Contracts\Speechless.Core.Services.Contracts.csproj", "{17964490-BA75-4D67-90A8-69861FEFE53C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Speechless.Infrastructure.Migrations", "Speechless.Infrastructure.Migrations\Speechless.Infrastructure.Migrations.csproj", "{E4A26907-4108-44DD-B40D-6E92BCBCD67D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Speechless.Infrastucture.Repositories.EntityFramework", "Speechless.Infrastucture.Repositories.EntityFramework\Speechless.Infrastucture.Repositories.EntityFramework.csproj", "{353D2C04-31F0-425E-9042-2181FF92A104}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Speechless.Infrastructure.Services.Concretes", "Speechless.Infrastructure.Services.Concretes\Speechless.Infrastructure.Services.Concretes.csproj", "{61125E24-4A04-4B45-81AA-230F4197B9E2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Speechless.Infrastructure.Migrations", "Speechless.Infrastructure.Migrations\Speechless.Infrastructure.Migrations.csproj", "{E4A26907-4108-44DD-B40D-6E92BCBCD67D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Speechless.Core.Domain.Tests", "Speechless.Core.Domain.Tests\Speechless.Core.Domain.Tests.csproj", "{891C4863-9D95-4427-8D1C-3A1BEB5BF339}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Speechless.Infrastructure.Services.Concretes", "Speechless.Infrastructure.Services.Concretes\Speechless.Infrastructure.Services.Concretes.csproj", "{61125E24-4A04-4B45-81AA-230F4197B9E2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Speechless.Infrastructure.Repositories.Tests", "Speechless.Infrastructure.Repositories.Tests\Speechless.Infrastructure.Repositories.Tests.csproj", "{922A2C64-582F-4F84-AD3E-6BD04E1903BA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Speechless.Mobile.Android.SpeechlessApp", "Speechless.Mobile.Android.SpeechlessApp\Speechless.Mobile.Android.SpeechlessApp.csproj", "{07272096-7498-4F50-B9FC-AA5202BDA99D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Speechless.Infrastructure.Services.Tests", "Speechless.Infrastructure.Services.Tests\Speechless.Infrastructure.Services.Tests.csproj", "{2179537E-8FA7-469E-88D7-32560D989FE6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Speechless.Mobile.iOS.SpeechlessApp", "Speechless.Mobile.iOS.SpeechlessApp\Speechless.Mobile.iOS.SpeechlessApp.csproj", "{4C22BFDA-5874-4348-B67D-2B06D262BAE4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Speechless.Mobile.SpeechlessApp.Android", "Speechless.Mobile.SpeechlessApp\Speechless.Mobile.SpeechlessApp.Android\Speechless.Mobile.SpeechlessApp.Android.csproj", "{B91FC685-636D-4104-AFDF-3A5979254648}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Speechless.Core.Domain.Tests", "Speechless.Core.Domain.Tests\Speechless.Core.Domain.Tests.csproj", "{891C4863-9D95-4427-8D1C-3A1BEB5BF339}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Speechless.Mobile.SpeechlessApp.iOS", "Speechless.Mobile.SpeechlessApp\Speechless.Mobile.SpeechlessApp.iOS\Speechless.Mobile.SpeechlessApp.iOS.csproj", "{9E047003-C141-4C9C-96D2-F1E0BA71C8C4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Speechless.Infrastructure.Repositories.Tests", "Speechless.Infrastructure.Repositories.Tests\Speechless.Infrastructure.Repositories.Tests.csproj", "{922A2C64-582F-4F84-AD3E-6BD04E1903BA}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Speechless.Infrastructure.Services.Tests", "Speechless.Infrastructure.Services.Tests\Speechless.Infrastructure.Services.Tests.csproj", "{2179537E-8FA7-469E-88D7-32560D989FE6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Speechless.Mobile.SpeechlessApp", "Speechless.Mobile.SpeechlessApp\Speechless.Mobile.SpeechlessApp\Speechless.Mobile.SpeechlessApp.csproj", "{B5E0B34A-F5B9-4ADD-A016-18881228AFE2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -145,34 +143,6 @@ Global
 		{61125E24-4A04-4B45-81AA-230F4197B9E2}.Release|iPhone.Build.0 = Release|Any CPU
 		{61125E24-4A04-4B45-81AA-230F4197B9E2}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
 		{61125E24-4A04-4B45-81AA-230F4197B9E2}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
-		{07272096-7498-4F50-B9FC-AA5202BDA99D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{07272096-7498-4F50-B9FC-AA5202BDA99D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{07272096-7498-4F50-B9FC-AA5202BDA99D}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{07272096-7498-4F50-B9FC-AA5202BDA99D}.Debug|iPhone.ActiveCfg = Debug|Any CPU
-		{07272096-7498-4F50-B9FC-AA5202BDA99D}.Debug|iPhone.Build.0 = Debug|Any CPU
-		{07272096-7498-4F50-B9FC-AA5202BDA99D}.Debug|iPhone.Deploy.0 = Debug|Any CPU
-		{07272096-7498-4F50-B9FC-AA5202BDA99D}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
-		{07272096-7498-4F50-B9FC-AA5202BDA99D}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
-		{07272096-7498-4F50-B9FC-AA5202BDA99D}.Debug|iPhoneSimulator.Deploy.0 = Debug|Any CPU
-		{07272096-7498-4F50-B9FC-AA5202BDA99D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{07272096-7498-4F50-B9FC-AA5202BDA99D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{07272096-7498-4F50-B9FC-AA5202BDA99D}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{07272096-7498-4F50-B9FC-AA5202BDA99D}.Release|iPhone.ActiveCfg = Release|Any CPU
-		{07272096-7498-4F50-B9FC-AA5202BDA99D}.Release|iPhone.Build.0 = Release|Any CPU
-		{07272096-7498-4F50-B9FC-AA5202BDA99D}.Release|iPhone.Deploy.0 = Release|Any CPU
-		{07272096-7498-4F50-B9FC-AA5202BDA99D}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
-		{07272096-7498-4F50-B9FC-AA5202BDA99D}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
-		{07272096-7498-4F50-B9FC-AA5202BDA99D}.Release|iPhoneSimulator.Deploy.0 = Release|Any CPU
-		{4C22BFDA-5874-4348-B67D-2B06D262BAE4}.Debug|Any CPU.ActiveCfg = Debug|iPhone
-		{4C22BFDA-5874-4348-B67D-2B06D262BAE4}.Debug|iPhone.ActiveCfg = Debug|iPhone
-		{4C22BFDA-5874-4348-B67D-2B06D262BAE4}.Debug|iPhone.Build.0 = Debug|iPhone
-		{4C22BFDA-5874-4348-B67D-2B06D262BAE4}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
-		{4C22BFDA-5874-4348-B67D-2B06D262BAE4}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
-		{4C22BFDA-5874-4348-B67D-2B06D262BAE4}.Release|Any CPU.ActiveCfg = Release|iPhone
-		{4C22BFDA-5874-4348-B67D-2B06D262BAE4}.Release|iPhone.ActiveCfg = Release|iPhone
-		{4C22BFDA-5874-4348-B67D-2B06D262BAE4}.Release|iPhone.Build.0 = Release|iPhone
-		{4C22BFDA-5874-4348-B67D-2B06D262BAE4}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
-		{4C22BFDA-5874-4348-B67D-2B06D262BAE4}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
 		{891C4863-9D95-4427-8D1C-3A1BEB5BF339}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{891C4863-9D95-4427-8D1C-3A1BEB5BF339}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{891C4863-9D95-4427-8D1C-3A1BEB5BF339}.Debug|iPhone.ActiveCfg = Debug|Any CPU
@@ -209,6 +179,46 @@ Global
 		{2179537E-8FA7-469E-88D7-32560D989FE6}.Release|iPhone.Build.0 = Release|Any CPU
 		{2179537E-8FA7-469E-88D7-32560D989FE6}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
 		{2179537E-8FA7-469E-88D7-32560D989FE6}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{B91FC685-636D-4104-AFDF-3A5979254648}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B91FC685-636D-4104-AFDF-3A5979254648}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B91FC685-636D-4104-AFDF-3A5979254648}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{B91FC685-636D-4104-AFDF-3A5979254648}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{B91FC685-636D-4104-AFDF-3A5979254648}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{B91FC685-636D-4104-AFDF-3A5979254648}.Debug|iPhone.Deploy.0 = Debug|Any CPU
+		{B91FC685-636D-4104-AFDF-3A5979254648}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{B91FC685-636D-4104-AFDF-3A5979254648}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{B91FC685-636D-4104-AFDF-3A5979254648}.Debug|iPhoneSimulator.Deploy.0 = Debug|Any CPU
+		{B91FC685-636D-4104-AFDF-3A5979254648}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B91FC685-636D-4104-AFDF-3A5979254648}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B91FC685-636D-4104-AFDF-3A5979254648}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{B91FC685-636D-4104-AFDF-3A5979254648}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{B91FC685-636D-4104-AFDF-3A5979254648}.Release|iPhone.Build.0 = Release|Any CPU
+		{B91FC685-636D-4104-AFDF-3A5979254648}.Release|iPhone.Deploy.0 = Release|Any CPU
+		{B91FC685-636D-4104-AFDF-3A5979254648}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{B91FC685-636D-4104-AFDF-3A5979254648}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{B91FC685-636D-4104-AFDF-3A5979254648}.Release|iPhoneSimulator.Deploy.0 = Release|Any CPU
+		{9E047003-C141-4C9C-96D2-F1E0BA71C8C4}.Debug|Any CPU.ActiveCfg = Debug|iPhone
+		{9E047003-C141-4C9C-96D2-F1E0BA71C8C4}.Debug|iPhone.ActiveCfg = Debug|iPhone
+		{9E047003-C141-4C9C-96D2-F1E0BA71C8C4}.Debug|iPhone.Build.0 = Debug|iPhone
+		{9E047003-C141-4C9C-96D2-F1E0BA71C8C4}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
+		{9E047003-C141-4C9C-96D2-F1E0BA71C8C4}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
+		{9E047003-C141-4C9C-96D2-F1E0BA71C8C4}.Release|Any CPU.ActiveCfg = Release|iPhone
+		{9E047003-C141-4C9C-96D2-F1E0BA71C8C4}.Release|iPhone.ActiveCfg = Release|iPhone
+		{9E047003-C141-4C9C-96D2-F1E0BA71C8C4}.Release|iPhone.Build.0 = Release|iPhone
+		{9E047003-C141-4C9C-96D2-F1E0BA71C8C4}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
+		{9E047003-C141-4C9C-96D2-F1E0BA71C8C4}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
+		{B5E0B34A-F5B9-4ADD-A016-18881228AFE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5E0B34A-F5B9-4ADD-A016-18881228AFE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5E0B34A-F5B9-4ADD-A016-18881228AFE2}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{B5E0B34A-F5B9-4ADD-A016-18881228AFE2}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{B5E0B34A-F5B9-4ADD-A016-18881228AFE2}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{B5E0B34A-F5B9-4ADD-A016-18881228AFE2}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{B5E0B34A-F5B9-4ADD-A016-18881228AFE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5E0B34A-F5B9-4ADD-A016-18881228AFE2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B5E0B34A-F5B9-4ADD-A016-18881228AFE2}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{B5E0B34A-F5B9-4ADD-A016-18881228AFE2}.Release|iPhone.Build.0 = Release|Any CPU
+		{B5E0B34A-F5B9-4ADD-A016-18881228AFE2}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{B5E0B34A-F5B9-4ADD-A016-18881228AFE2}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -220,8 +230,6 @@ Global
 		{F6E506E7-16E4-4767-932D-AB3B24393855} = {303031E2-2B5C-4982-AF59-6450497D7B52}
 		{6D54F1E4-40F3-4C16-986D-703DA106B9DB} = {303031E2-2B5C-4982-AF59-6450497D7B52}
 		{150B94BF-EC59-4655-B49D-9B069039A470} = {303031E2-2B5C-4982-AF59-6450497D7B52}
-		{3C961887-539B-4D73-9369-3C378A37DED9} = {18835FAB-212D-4ADB-85DD-61C7C1381275}
-		{DC1C1DBA-82EF-4E41-A1B2-C970E42F3CAA} = {18835FAB-212D-4ADB-85DD-61C7C1381275}
 		{BB483955-9B15-4FAC-8B6B-0610DB13A075} = {49AA4BAD-3B98-49DD-8392-073AC3115C09}
 		{B17F87F2-EBE6-46FC-B881-481E6FCFF85D} = {49AA4BAD-3B98-49DD-8392-073AC3115C09}
 		{5B97219C-BEC6-4858-B4EC-2EA71FDDF024} = {8757C008-45BE-4376-9CCB-F1A98657B6C2}
@@ -229,11 +237,12 @@ Global
 		{353D2C04-31F0-425E-9042-2181FF92A104} = {F6E506E7-16E4-4767-932D-AB3B24393855}
 		{E4A26907-4108-44DD-B40D-6E92BCBCD67D} = {6D54F1E4-40F3-4C16-986D-703DA106B9DB}
 		{61125E24-4A04-4B45-81AA-230F4197B9E2} = {150B94BF-EC59-4655-B49D-9B069039A470}
-		{07272096-7498-4F50-B9FC-AA5202BDA99D} = {3C961887-539B-4D73-9369-3C378A37DED9}
-		{4C22BFDA-5874-4348-B67D-2B06D262BAE4} = {DC1C1DBA-82EF-4E41-A1B2-C970E42F3CAA}
 		{891C4863-9D95-4427-8D1C-3A1BEB5BF339} = {85A507F9-36F7-4498-9F04-C3E14DFD6ACA}
 		{922A2C64-582F-4F84-AD3E-6BD04E1903BA} = {85A507F9-36F7-4498-9F04-C3E14DFD6ACA}
 		{2179537E-8FA7-469E-88D7-32560D989FE6} = {85A507F9-36F7-4498-9F04-C3E14DFD6ACA}
+		{B91FC685-636D-4104-AFDF-3A5979254648} = {18835FAB-212D-4ADB-85DD-61C7C1381275}
+		{9E047003-C141-4C9C-96D2-F1E0BA71C8C4} = {18835FAB-212D-4ADB-85DD-61C7C1381275}
+		{B5E0B34A-F5B9-4ADD-A016-18881228AFE2} = {18835FAB-212D-4ADB-85DD-61C7C1381275}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1D9D8190-0E56-4CEB-A51B-289B8A0C8E9B}
