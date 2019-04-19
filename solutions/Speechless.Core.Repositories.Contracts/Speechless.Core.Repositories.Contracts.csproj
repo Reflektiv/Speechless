@@ -1,8 +1,16 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>Reflektiv.Speechless.Core.Repositories.Contracts</RootNamespace>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="xmisc.backbone.repositories.contracts" Version="4.1.29-beta" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Speechless.Core.Domain.Concretes\Speechless.Core.Domain.Concretes.csproj" />
+  </ItemGroup>
 
 </Project>

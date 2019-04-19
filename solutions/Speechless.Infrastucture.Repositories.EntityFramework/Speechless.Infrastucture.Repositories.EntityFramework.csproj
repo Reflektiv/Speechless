@@ -1,8 +1,12 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>Reflektiv.Speechless.Infrastucture.Repositories.EntityFramework</RootNamespace>
   </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Speechless.Core.Repositories.Contracts\Speechless.Core.Repositories.Contracts.csproj" />
+  </ItemGroup>
 
 </Project>
