@@ -8,14 +8,14 @@ namespace Reflektiv.Speechless.Core.Domain.Contracts.Models
     public interface IBusinessCard
     {
         /// <summary>
-        /// Gets or sets the human-friendly identifier of the card.
+        /// Gets or sets a custom label (human-friendly identifier) for the business card.
         /// </summary>
         string Label { get; set; }
 
         /// <summary>
-        /// Gets or sets the details of the business card.
+        /// Imports information from the specified business card. 
         /// </summary>
-        VCard Details { get; set; }
-
+        /// <param name="other">The business card to import from.</param>
+        void Import(IBusinessCard other);
     }
 }

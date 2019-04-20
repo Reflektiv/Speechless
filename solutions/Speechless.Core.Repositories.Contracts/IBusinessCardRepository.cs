@@ -4,6 +4,9 @@ using System;
 
 namespace Speechless.Core.Repositories.Contracts
 {
+    /// <summary>
+    /// Specifies a repository for <see cref="BusinessCard"/> items.
+    /// </summary>
     public interface IBusinessCardRepository :
         IReadRepository<Guid, BusinessCard>,
         IWriteRepository<Guid, BusinessCard>,

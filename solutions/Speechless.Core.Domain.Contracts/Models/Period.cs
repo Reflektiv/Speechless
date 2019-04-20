@@ -19,6 +19,7 @@ namespace Reflektiv.Speechless.Core.Domain.Contracts.Models
         /// </summary>
         public DateTime End { get; }
 
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Period"/> struct.
         /// </summary>
@@ -32,12 +33,7 @@ namespace Reflektiv.Speechless.Core.Domain.Contracts.Models
 
         public bool Equals(Period other) => Start == other.Start && End == other.End;
 
-        public override bool Equals(object obj)
-        {
-            return obj is Period period &&
-                   Start == period.Start &&
-                   End == period.End;
-        }
+        public override bool Equals(object obj) => obj is Period other ? Equals(other) : false;
 
         public override int GetHashCode()
         {
