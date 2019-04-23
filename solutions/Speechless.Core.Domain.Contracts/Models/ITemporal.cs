@@ -11,7 +11,7 @@ namespace Reflektiv.Speechless.Core.Domain.Contracts.Models
     public interface ITemporal
     {
         /// <summary>
-        /// The date range in which the object is effective.
+        /// The date range in which the object is valid.
         /// </summary>
         Period? Effective { get; }
     }

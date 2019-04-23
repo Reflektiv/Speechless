@@ -17,5 +17,7 @@ namespace Reflektiv.Speechless.Core.Domain.Contracts.Models
         /// </summary>
         /// <param name="other">The business card to import from.</param>
         void Import(IBusinessCard other);
+
+
     }
 }
