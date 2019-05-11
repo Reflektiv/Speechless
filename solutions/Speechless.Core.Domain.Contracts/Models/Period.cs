@@ -45,7 +45,7 @@ namespace Reflektiv.Speechless.Core.Domain.Contracts.Models
 
         public static bool operator ==(Period left, Period right) => left.Equals(right);
 
-        public static bool operator !=(Period left, Period right) => !left.Equals(right);
+        public static bool operator !=(Period left, Period right) => !left.Equals(right); 
 
      
     }

@@ -1,6 +1,4 @@
-﻿using MixERP.Net.VCards;
-
-namespace Reflektiv.Speechless.Core.Domain.Contracts.Models
+﻿namespace Reflektiv.Speechless.Core.Domain.Contracts.Models
 {
     /// <summary>
     /// Specifies a business card that a user can share with others.

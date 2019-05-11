@@ -17,13 +17,9 @@ namespace Reflektiv.Speechless.Core.Domain.Concretes.Models
         /// </summary>
         public Guid Id
         {
-            get => Guid.TryParse(UniqueIdentifier, out Guid guid)
-                   ? guid
-                     : throw new FormatException("Invalid format for unique identifier");
+            get => Guid.TryParse(UniqueIdentifier, out Guid guid) ? guid : Guid.Empty;
             set => UniqueIdentifier = value.ToString("D");
-        }
-
-       
+        }   
 
         /// <summary>
         /// Gets or sets a custom label (human-friendly identifier) for the business card.

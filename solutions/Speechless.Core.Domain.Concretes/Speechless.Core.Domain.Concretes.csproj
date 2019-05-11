@@ -6,6 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MixERP.Net.VCards" Version="1.0.7" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Speechless.Core.Domain.Contracts\Speechless.Core.Domain.Contracts.csproj" />
   </ItemGroup>
 
