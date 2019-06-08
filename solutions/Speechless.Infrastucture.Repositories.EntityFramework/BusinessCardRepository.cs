@@ -126,15 +126,7 @@ namespace Reflektiv.Speechless.Infrastucture.Repositories.EntityFramework
             return deletes != 0;
         }
 
-        public BusinessCard Find(Expression<Func<BusinessCard, bool>> predicate, bool references = true)
-        {
-            using (var context = new RepositoryContext())
-            {
-                return context.BusinessCards.Where(predicate).FirstOrDefault();
-            }
-        }
-
-        public IEnumerable<BusinessCard> FindAll(Expression<Func<BusinessCard, bool>> predicate, bool references = true, int? offset = null, int? count = null)
+        public IEnumerable<BusinessCard> FindAll(Expression<Func<BusinessCard, bool>> predicate, bool? references = null, int? offset = null, int? count = null)
         {
             using (var context = new RepositoryContext())
             {
@@ -145,7 +137,7 @@ namespace Reflektiv.Speechless.Infrastucture.Repositories.EntityFramework
             }
         }
 
-        public async Task<IEnumerable<BusinessCard>> FindAllAsync(Expression<Func<BusinessCard, bool>> predicate, bool references = true, int? offset = null, int? count = null, CancellationToken token = default)
+        public async Task<IEnumerable<BusinessCard>> FindAllAsync(Expression<Func<BusinessCard, bool>> predicate, bool? references = null, int? offset = null, int? count = null, CancellationToken token = default)
         {
             {
                 using (var context = new RepositoryContext())
@@ -158,7 +150,7 @@ namespace Reflektiv.Speechless.Infrastucture.Repositories.EntityFramework
             }
         }
 
-        public IEnumerable<BusinessCard> FindAllByKeys(IEnumerable<Guid> keys, bool references = true, int? offset = null, int? count = null)
+        public IEnumerable<BusinessCard> FindAllByKeys(IEnumerable<Guid> keys, bool? references = null, int? offset = null, int? count = null)
         {
             using (var context = new RepositoryContext())
             {
@@ -169,7 +161,7 @@ namespace Reflektiv.Speechless.Infrastucture.Repositories.EntityFramework
             }
         }
 
-        public async Task<IEnumerable<BusinessCard>> FindAllByKeysAsync(IEnumerable<Guid> keys, bool references = true, int? offset = null, int? count = null, CancellationToken token = default)
+        public async Task<IEnumerable<BusinessCard>> FindAllByKeysAsync(IEnumerable<Guid> keys, bool? references = null, int? offset = null, int? count = null, CancellationToken token = default)
         {
             using (var context = new RepositoryContext())
             {
@@ -180,7 +172,7 @@ namespace Reflektiv.Speechless.Infrastucture.Repositories.EntityFramework
             }
         }
 
-        public async Task<BusinessCard> FindAsync(Expression<Func<BusinessCard, bool>> predicate, bool references = true, CancellationToken token = default)
+        public async Task<BusinessCard> FindAsync(Expression<Func<BusinessCard, bool>> predicate, bool? references = null, CancellationToken token = default)
         {
             using (var context = new RepositoryContext())
             {
@@ -188,7 +180,7 @@ namespace Reflektiv.Speechless.Infrastucture.Repositories.EntityFramework
             }
         }
 
-        public BusinessCard FindByKey(Guid key, bool references = true)
+        public BusinessCard FindByKey(Guid key, bool? references = null)
         {
             using (var context = new RepositoryContext())
             {
@@ -196,7 +188,7 @@ namespace Reflektiv.Speechless.Infrastucture.Repositories.EntityFramework
             }
         }
 
-        public async Task<BusinessCard> FindByKeyAsync(Guid key, bool references = true, CancellationToken token = default)
+        public async Task<BusinessCard> FindByKeyAsync(Guid key, bool? references = null, CancellationToken token = default)
         {
             using (var context = new RepositoryContext())
             {
@@ -204,7 +196,7 @@ namespace Reflektiv.Speechless.Infrastucture.Repositories.EntityFramework
             }
         }
 
-        public IEnumerable<BusinessCard> Get(bool references = true, int? offset = null, int? count = null)
+        public IEnumerable<BusinessCard> Get(bool? references = null, int? offset = null, int? count = null)
         {
             using (var context = new RepositoryContext())
             {
@@ -215,7 +207,7 @@ namespace Reflektiv.Speechless.Infrastucture.Repositories.EntityFramework
             }
         }
 
-        public async Task<IEnumerable<BusinessCard>> GetAsync(bool references = true, int? offset = null, int? count = null, CancellationToken token = default)
+        public async Task<IEnumerable<BusinessCard>> GetAsync(bool? references = null, int? offset = null, int? count = null, CancellationToken token = default)
         {
             using (var context = new RepositoryContext())
             {
@@ -248,20 +240,24 @@ namespace Reflektiv.Speechless.Infrastucture.Repositories.EntityFramework
             }
         }
 
-        public void Register(BusinessCard model, bool references = false) => model.Id = generator.GetNext();
+        public void Register(BusinessCard model, bool? references = null)
+        {
+            FindAll(card => card.FirstName == model.FirstName || card.LastName != model.LastName);
+            model.Id = generator.GetNext();
+        }
 
-        public void RegisterAll(IEnumerable<BusinessCard> models, bool references = false, int? offset = null, int? count = null)
+        public void RegisterAll(IEnumerable<BusinessCard> models, bool? references = null, int? offset = null, int? count = null)
         {
             foreach (var model in models) Register(model, references);
         }
 
-        public Task RegisterAllAsync(IEnumerable<BusinessCard> models, bool references = false, int? offset = null, int? count = null, CancellationToken cancellation = default)
+        public Task RegisterAllAsync(IEnumerable<BusinessCard> models, bool? references = null, int? offset = null, int? count = null, CancellationToken cancellation = default)
         {
             RegisterAll(models, references);
             return Task.CompletedTask;
         }
 
-        public Task RegisterAsync(BusinessCard model, bool references = false, CancellationToken cancellation = default)
+        public Task RegisterAsync(BusinessCard model, bool? references = null, CancellationToken cancellation = default)
         {
             var tcs = new TaskCompletionSource<bool>();
             try
@@ -281,52 +277,52 @@ namespace Reflektiv.Speechless.Infrastucture.Repositories.EntityFramework
             return tcs.Task;
         }
 
-        public void Restore(BusinessCard model, bool references = false)
+        public void Restore(BusinessCard model, bool? references = null)
         {
             model.IsDeleted = false;
-            Save(model, references);
+            Save(model, references ?? false);
         }
 
-        public void RestoreAll(IEnumerable<BusinessCard> models, bool references = false)
+        public void RestoreAll(IEnumerable<BusinessCard> models, bool? references = null)
         {
             foreach (var model in models) model.IsDeleted = false;
-            SaveAll(models, references);
+            SaveAll(models, references ?? false);
         }
 
-        public Task RestoreAllAsync(IEnumerable<BusinessCard> models, bool references = false, CancellationToken token = default)
+        public Task RestoreAllAsync(IEnumerable<BusinessCard> models, bool? references = null, CancellationToken token = default)
         {
             foreach (var model in models) model.IsDeleted = false;
-            return SaveAllAsync(models, references, token);
+            return SaveAllAsync(models, references ?? false, token);
         }
 
-        public IEnumerable<BusinessCard> RestoreAllByKeys(IEnumerable<Guid> keys, bool references = false, int? offset = null, int? count = null)
+        public IEnumerable<BusinessCard> RestoreAllByKeys(IEnumerable<Guid> keys, bool? references = null, int? offset = null, int? count = null)
         {
             var matches = FindAllByKeys(keys, references, offset, count);
             if (matches.Any()) RestoreAll(matches, references);
             return matches;
         }
 
-        public async Task<IEnumerable<BusinessCard>> RestoreAllByKeysAsync(IEnumerable<Guid> keys, bool references = false, int? offset = null, int? count = null, CancellationToken token = default)
+        public async Task<IEnumerable<BusinessCard>> RestoreAllByKeysAsync(IEnumerable<Guid> keys, bool? references = null, int? offset = null, int? count = null, CancellationToken token = default)
         {
             var matches = await FindAllByKeysAsync(keys, references, offset, count, token).ConfigureAwait(false);
             if (matches.Any()) await RestoreAllAsync(matches, references, token).ConfigureAwait(false);
             return matches;
         }
 
-        public Task RestoreAsync(BusinessCard model, bool references = false)
+        public Task RestoreAsync(BusinessCard model, bool? references = null)
         {
             model.IsDeleted = false;
-            return SaveAsync(model, references);
+            return SaveAsync(model, references ?? false);
         }
 
-        public BusinessCard RestoreByKey(Guid key, bool references = false)
+        public BusinessCard RestoreByKey(Guid key, bool? references = null)
         {
             var match = FindByKey(key, references);
             if (match != null) Restore(match, references);
             return match;
         }
 
-        public async Task<BusinessCard> RestoreByKeyAsync(Guid key, bool references = false)
+        public async Task<BusinessCard> RestoreByKeyAsync(Guid key, bool? references = null)
         {
             var match = await FindByKeyAsync(key, references).ConfigureAwait(false);
             if (match != null) await RestoreAsync(match, references).ConfigureAwait(false);
@@ -397,65 +393,65 @@ namespace Reflektiv.Speechless.Infrastucture.Repositories.EntityFramework
             return inserted;
         }
 
-        public void Trash(BusinessCard model, bool references = false)
+        public void Trash(BusinessCard model, bool? references = null)
         {
             model.IsDeleted = true;
-            Save(model, references);
+            Save(model, references ?? false);
         }
 
-        public void TrashAll(IEnumerable<BusinessCard> models, bool references = false)
+        public void TrashAll(IEnumerable<BusinessCard> models, bool? references = null)
         {
             foreach (var model in models) model.IsDeleted = true;
-            SaveAll(models, references);
+            SaveAll(models, references ?? false);
         }
 
-        public Task TrashAllAsync(IEnumerable<BusinessCard> models, bool references = false, CancellationToken token = default)
+        public Task TrashAllAsync(IEnumerable<BusinessCard> models, bool? references = null, CancellationToken token = default)
         {
             foreach (var model in models) model.IsDeleted = true;
-            return SaveAllAsync(models, references, token);
+            return SaveAllAsync(models, references ?? false, token);
         }
 
-        public IEnumerable<BusinessCard> TrashAllByKeys(IEnumerable<Guid> keys, bool references = false, int? offset = null, int? count = null)
+        public IEnumerable<BusinessCard> TrashAllByKeys(IEnumerable<Guid> keys, bool? references = null, int? offset = null, int? count = null)
         {
             var matches = FindAllByKeys(keys, references, offset, count);
             if (matches.Any()) TrashAll(matches, references);
             return matches;
         }
 
-        public async Task<IEnumerable<BusinessCard>> TrashAllByKeysAsync(IEnumerable<Guid> keys, bool references = false, int? offset = null, int? count = null, CancellationToken token = default)
+        public async Task<IEnumerable<BusinessCard>> TrashAllByKeysAsync(IEnumerable<Guid> keys, bool? references = null, int? offset = null, int? count = null, CancellationToken token = default)
         {
             var matches = await FindAllByKeysAsync(keys, references, offset, count, token).ConfigureAwait(false);
             if (matches.Any()) await TrashAllAsync(matches, references, token).ConfigureAwait(false);
             return matches;
         }
 
-        public Task TrashAsync(BusinessCard model, bool references = false)
+        public Task TrashAsync(BusinessCard model, bool? references = null)
         {
             model.IsDeleted = true;
-            return SaveAsync(model, references);
+            return SaveAsync(model, references ?? false);
         }
 
-        public BusinessCard TrashByKey(Guid key, bool references = false)
+        public BusinessCard TrashByKey(Guid key, bool? references = null)
         {
             var match = FindByKey(key, references);
             if (match != null) Trash(match, references);
             return match;
         }
 
-        public async Task<BusinessCard> TrashByKeyAsync(Guid key, bool references = false, CancellationToken token = default)
+        public async Task<BusinessCard> TrashByKeyAsync(Guid key, bool? references = null, CancellationToken token = default)
         {
             var match = await FindByKeyAsync(key, references).ConfigureAwait(false);
             if (match != null) await TrashAsync(match, references).ConfigureAwait(false);
             return match;
         }
 
-        public void Unregister(BusinessCard model, bool references = false)
+        public void Unregister(BusinessCard model, bool? references = null)
         {
             var exists = ContainsKey(model.Id);
             if (!exists) model.Id = generator.GetNullKey();
         }
 
-        public void UnregisterAll(IEnumerable<BusinessCard> models, bool references = false, int? offset = null, int? count = null)
+        public void UnregisterAll(IEnumerable<BusinessCard> models, bool? references = null, int? offset = null, int? count = null)
         {
             var keys = models.Select(x => x.Id);
             var matches = FindAllByKeys(keys, references, offset, count);
@@ -463,7 +459,7 @@ namespace Reflektiv.Speechless.Infrastucture.Repositories.EntityFramework
             foreach (var nonmatch in nonmatches) nonmatch.Id = generator.GetNullKey();
         }
 
-        public async Task UnregisterAllAsync(IEnumerable<BusinessCard> models, bool references = false, int? offset = null, int? count = null, CancellationToken cancellation = default)
+        public async Task UnregisterAllAsync(IEnumerable<BusinessCard> models, bool? references = null, int? offset = null, int? count = null, CancellationToken cancellation = default)
         {
             try
             {
@@ -486,7 +482,7 @@ namespace Reflektiv.Speechless.Infrastucture.Repositories.EntityFramework
             }
         }
 
-        public async Task UnregisterAsync(BusinessCard model, bool references = false, CancellationToken cancellation = default)
+        public async Task UnregisterAsync(BusinessCard model, bool? references = null, CancellationToken cancellation = default)
         {
             var exists = await ContainsKeyAsync(model.Id, cancellation).ConfigureAwait(false);
             if (!exists) model.Id = generator.GetNullKey();
