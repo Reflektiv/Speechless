@@ -4,6 +4,7 @@ using Reflektiv.Speechless.Core.Domain.Contracts.Extensions;
 using Reflektiv.Speechless.Core.Domain.Contracts.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 
 namespace Reflektiv.Speechless.Core.Domain.Concretes.Models
 {
@@ -19,7 +20,7 @@ namespace Reflektiv.Speechless.Core.Domain.Concretes.Models
         {
             get => Guid.TryParse(UniqueIdentifier, out Guid guid) ? guid : Guid.Empty;
             set => UniqueIdentifier = value.ToString("D");
-        }   
+        }
 
         /// <summary>
         /// Gets or sets a custom label (human-friendly identifier) for the business card.
@@ -33,15 +34,17 @@ namespace Reflektiv.Speechless.Core.Domain.Concretes.Models
 
         /// <summary>
         /// Gets or sets whether an item has been temporarily deleted (soft-delete).
-        /// <para/> true if it has been temporarily deleted; otherwise false.
+        /// <para/>
+        /// true if it has been temporarily deleted; otherwise false.
         /// </summary>
         public bool IsDeleted { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BusinessCard"/> class.
         /// </summary>
-        public BusinessCard()
+        public BusinessCard() : base()
         {
+            // Initialize the IEnumerables from VCard as lists.
             Impps = new List<Impp>();
             Languages = new List<Language>();
             Relations = new List<Relation>();
@@ -51,6 +54,8 @@ namespace Reflektiv.Speechless.Core.Domain.Concretes.Models
             Telephones = new List<Telephone>();
             Emails = new List<Email>();
         }
+
+        private delegate T Function<T>(T a, T b);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BusinessCard"/> class from another.
