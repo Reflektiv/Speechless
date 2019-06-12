@@ -13,20 +13,20 @@ namespace Reflektiv.Speechless.Core.Domain.Concretes.Models
 
         public Guid Id { get; set; }
 
-        public AddressType Type { get; set; }
-        public string PoBox { get; set; }
+        public AddressType Type { get => address.Type; set => address.Type = value; }
+        public string PoBox { get => address.PoBox; set => PoBox = value; }
 
-        public string ExtendedAddress { get; set; }
-        public string Street { get; set; }
+        public string ExtendedAddress { get => address.ExtendedAddress; set => address.ExtendedAddress = value; }
+        public string Street { get => address.Street ; set => address.Street = value; }
 
-        public string Locality { get; set; }
-        public string Region { get; set; }
-        public string PostalCode { get; set; }
-        public string Country { get; set; }
-        public double? Longitude { get; set; }
-        public double? Latitude { get; set; }
-        public string Label { get; set; }
-        public TimeZoneInfo TimeZone { get; set; }
+        public string Locality { get => address.Locality; set => address.Locality = value; }
+        public string Region { get => address.Region; set => address.Region = value; }
+        public string PostalCode { get => address.PostalCode; set => address.PostalCode = value; }
+        public string Country { get => address.Country; set => address.Country = value; }
+        public double? Longitude { get => address.Longitude; set => address.Longitude = value; }
+        public double? Latitude { get => address.Latitude; set => address.Latitude = value; }
+        public string Label { get => address.Label; set => address.Label = value; }
+        public TimeZoneInfo TimeZone { get => address.TimeZone ; set => address.TimeZone = value; }
         public int Preference { get => address.Preference; set => address.Preference = value; }
 
         public IEquatable<CustomExtension> Extensions
