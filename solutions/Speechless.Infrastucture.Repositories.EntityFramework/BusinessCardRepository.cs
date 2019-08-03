@@ -67,7 +67,7 @@ namespace Reflektiv.Speechless.Infrastucture.Repositories.EntityFramework
         public int EraseAllByKeys(IEnumerable<Guid> keys)
         {
             var deletes = 0;
-            using (var scope = OrmliteExtensions.CreateTransactionScope(TransactionScopeOption.Required))
+            using (var scope = EfCoreExtensions.CreateTransactionScope(TransactionScopeOption.Required))
             {
                 using (var context = new RepositoryContext())
                 {
@@ -82,7 +82,7 @@ namespace Reflektiv.Speechless.Infrastucture.Repositories.EntityFramework
         public async Task<int> EraseAllByKeysAsync(IEnumerable<Guid> keys, CancellationToken token = default)
         {
             var result = 0;
-            using (var scope = OrmliteExtensions.CreateTransactionScopeFlow(TransactionScopeOption.Required))
+            using (var scope = EfCoreExtensions.CreateTransactionScopeFlow(TransactionScopeOption.Required))
             {
                 using (var context = new RepositoryContext())
                 {
@@ -99,7 +99,7 @@ namespace Reflektiv.Speechless.Infrastucture.Repositories.EntityFramework
         public bool EraseByKey(Guid key)
         {
             int deletes = 0;
-            using (var scope = OrmliteExtensions.CreateTransactionScopeFlow(TransactionScopeOption.Required))
+            using (var scope = EfCoreExtensions.CreateTransactionScopeFlow(TransactionScopeOption.Required))
             {
                 using (var context = new RepositoryContext())
                 {
@@ -114,7 +114,7 @@ namespace Reflektiv.Speechless.Infrastucture.Repositories.EntityFramework
         public async Task<bool> EraseByKeyAsync(Guid key, CancellationToken token = default)
         {
             int deletes = 0;
-            using (var scope = OrmliteExtensions.CreateTransactionScopeFlow(TransactionScopeOption.Required))
+            using (var scope = EfCoreExtensions.CreateTransactionScopeFlow(TransactionScopeOption.Required))
             {
                 using (var context = new RepositoryContext())
                 {
@@ -332,7 +332,7 @@ namespace Reflektiv.Speechless.Infrastucture.Repositories.EntityFramework
         public bool Save(BusinessCard model, bool references = true)
         {
             var inserted = false;
-            using (var scope = OrmliteExtensions.CreateTransactionScope(TransactionScopeOption.Required))
+            using (var scope = EfCoreExtensions.CreateTransactionScope(TransactionScopeOption.Required))
             {
                 using (var context = new RepositoryContext())
                 {
@@ -349,7 +349,7 @@ namespace Reflektiv.Speechless.Infrastucture.Repositories.EntityFramework
         public int SaveAll(IEnumerable<BusinessCard> models, bool references = true)
         {
             var inserts = 0;
-            using (var scope = OrmliteExtensions.CreateTransactionScope(TransactionScopeOption.Required))
+            using (var scope = EfCoreExtensions.CreateTransactionScope(TransactionScopeOption.Required))
             {
                 using (var context = new RepositoryContext())
                 {
@@ -364,7 +364,7 @@ namespace Reflektiv.Speechless.Infrastucture.Repositories.EntityFramework
         public async Task<int> SaveAllAsync(IEnumerable<BusinessCard> models, bool references = true, CancellationToken token = default)
         {
             var inserts = 0;
-            using (var scope = OrmliteExtensions.CreateTransactionScope(TransactionScopeOption.Required))
+            using (var scope = EfCoreExtensions.CreateTransactionScope(TransactionScopeOption.Required))
             {
                 using (var context = new RepositoryContext())
                 {
@@ -379,7 +379,7 @@ namespace Reflektiv.Speechless.Infrastucture.Repositories.EntityFramework
         public async Task<bool> SaveAsync(BusinessCard model, bool references = true, CancellationToken token = default)
         {
             var inserted = false;
-            using (var scope = OrmliteExtensions.CreateTransactionScope(TransactionScopeOption.Required))
+            using (var scope = EfCoreExtensions.CreateTransactionScope(TransactionScopeOption.Required))
             {
                 using (var context = new RepositoryContext())
                 {

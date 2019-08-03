@@ -15,8 +15,4 @@
     <ProjectReference Include="..\Speechless.Core.Repositories.Contracts\Speechless.Core.Repositories.Contracts.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Extensions\" />
-  </ItemGroup>
-
 </Project>

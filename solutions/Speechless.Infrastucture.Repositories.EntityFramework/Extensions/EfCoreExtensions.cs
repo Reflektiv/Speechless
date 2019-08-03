@@ -9,27 +9,8 @@ using IsolationLevel = System.Transactions.IsolationLevel;
 
 namespace PwC.xEric.Infrastructure.Repositories.Ormlite.Extensions
 {
-    public static class OrmliteExtensions
+    public static class EfCoreExtensions
     {
-        //public static void DropTableIfExists<TModel>(this IDbConnection db)
-        //{
-        //    if (db.TableExists<TModel>()) db.DropTable<TModel>();
-        //}
-
-        //public static void DeleteOrCreateTable<TModel>(this IDbConnection db)
-        //{
-        //    if (db.TableExists<TModel>()) db.DeleteAll<TModel>();
-        //    else db.CreateTable<TModel>();
-        //}
-
-        //public static Task DeleteOrCreateTableAsync<TModel>(this IDbConnection db, CancellationToken token = default)
-        //{
-        //    if (db.TableExists<TModel>()) db.DeleteAllAsync<TModel>(token);
-        //    else db.CreateTable<TModel>();
-        //    return Task.FromResult(true);
-        //}
-
-
         public static TransactionScope CreateTransactionScope(TransactionScopeOption scopeOption, IsolationLevel level = IsolationLevel.ReadCommitted)
         {
             var options = new TransactionOptions

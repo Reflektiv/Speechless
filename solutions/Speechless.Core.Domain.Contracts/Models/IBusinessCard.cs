@@ -11,11 +11,9 @@
         string Label { get; set; }
 
         /// <summary>
-        /// Imports information from the specified business card. 
+        /// Imports information from the specified business card.
         /// </summary>
         /// <param name="other">The business card to import from.</param>
         void Import(IBusinessCard other);
-
-
     }
 }

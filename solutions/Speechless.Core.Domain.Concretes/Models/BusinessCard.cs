@@ -4,7 +4,6 @@ using Reflektiv.Speechless.Core.Domain.Contracts.Extensions;
 using Reflektiv.Speechless.Core.Domain.Contracts.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 
 namespace Reflektiv.Speechless.Core.Domain.Concretes.Models
 {
@@ -54,8 +53,6 @@ namespace Reflektiv.Speechless.Core.Domain.Concretes.Models
             Telephones = new List<Telephone>();
             Emails = new List<Email>();
         }
-
-        private delegate T Function<T>(T a, T b);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BusinessCard"/> class from another.

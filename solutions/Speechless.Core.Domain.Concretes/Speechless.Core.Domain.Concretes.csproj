@@ -6,6 +6,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Models\VCardAddress.cs" />
+    <Compile Remove="Models\VCardCustomExtension.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="MixERP.Net.VCards" Version="1.0.7" />
   </ItemGroup>
 
