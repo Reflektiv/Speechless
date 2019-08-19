@@ -240,11 +240,7 @@ namespace Reflektiv.Speechless.Infrastucture.Repositories.EntityFramework
             }
         }
 
-        public void Register(BusinessCard model, bool? references = null)
-        {
-            FindAll(card => card.FirstName == model.FirstName || card.LastName != model.LastName);
-            model.Id = generator.GetNext();
-        }
+        public void Register(BusinessCard model, bool? references = null) => model.Id = generator.GetNext();
 
         public void RegisterAll(IEnumerable<BusinessCard> models, bool? references = null, int? offset = null, int? count = null)
         {
@@ -253,8 +249,26 @@ namespace Reflektiv.Speechless.Infrastucture.Repositories.EntityFramework
 
         public Task RegisterAllAsync(IEnumerable<BusinessCard> models, bool? references = null, int? offset = null, int? count = null, CancellationToken cancellation = default)
         {
-            RegisterAll(models, references);
-            return Task.CompletedTask;
+            var exceptions = new List<Exception>();
+            try
+            {
+                foreach (var model in models)
+                {
+                    cancellation.ThrowIfCancellationRequested();
+                    Register(model, references);
+                }
+            }
+            catch (OperationCanceledException ex)
+            {
+                exceptions.Add(ex);
+            }
+            catch (Exception ex)
+            {
+                exceptions.Add(ex);
+            }
+            return exceptions.Any()
+                ? Task.FromException<AggregateException>(new AggregateException(exceptions))
+                : Task.CompletedTask;
         }
 
         public Task RegisterAsync(BusinessCard model, bool? references = null, CancellationToken cancellation = default)
