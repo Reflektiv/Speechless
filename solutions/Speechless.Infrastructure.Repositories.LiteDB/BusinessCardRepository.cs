@@ -1,36 +1,33 @@
-﻿using Couchbase.Lite;
-using Couchbase.Lite.Query;
+﻿using LiteDB;
 using reexmonkey.xmisc.backbone.identifiers.contracts.models;
-using reexmonkey.xmisc.backbone.io.jil.serializers;
-using reexmonkey.xmisc.core.io.serializers;
 using Reflektiv.Speechless.Core.Domain.Concretes.Models;
 using Speechless.Core.Repositories.Contracts;
-using Speechless.Infrastructure.Repositories.CouchbaseLite.Extensions;
+using Speechless.Infrastructure.Repositories.LiteDB.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
-using cbExpression = Couchbase.Lite.Query.Expression;
+using System.Transactions;
 
-namespace Speechless.Infrastructure.Repositories.CouchbaseLite
+namespace Speechless.Infrastructure.Repositories.LiteDB
 {
     public class BusinessCardRepository : IBusinessCardRepository
     {
         private readonly IKeyGenerator<SequentialGuid> generator;
-        private readonly Database db;
-        private readonly TextSerializerBase serializer;
-        private const string keyName = "Document ID";
+        private readonly LiteDatabase db;
+        private readonly LiteCollection<BusinessCard> collection;
 
-        public BusinessCardRepository(IKeyGenerator<SequentialGuid> generator, Database db, TextSerializerBase serializer)
+
+        public BusinessCardRepository(IKeyGenerator<SequentialGuid> generator, LiteDatabase db)
         {
             this.generator = generator ?? throw new ArgumentNullException(nameof(generator));
             this.db = db ?? throw new ArgumentNullException(nameof(db));
-            this.serializer = serializer ?? throw new ArgumentNullException(nameof(serializer));
+            collection = db.GetCollection<BusinessCard>();
         }
 
-        public bool ContainsKey(Guid key) => db.GetDocument(key.ToString()) != null;
+        public bool ContainsKey(Guid key) => collection.Exists(Query.EQ("Id", key));
 
         public Task<bool> ContainsKeyAsync(Guid key, CancellationToken token = default)
         {
@@ -53,18 +50,8 @@ namespace Speechless.Infrastructure.Repositories.CouchbaseLite
 
         public bool ContainsKeys(IEnumerable<Guid> keys, bool strict = true)
         {
-            var ids = keys.Select(key => cbExpression.String(key.ToString())).ToArray();
-            using (var query = QueryBuilder
-                .SelectDistinct(SelectResult.Property(keyName))
-                .From(DataSource.Database(db))
-                .Where(cbExpression.Property(keyName)
-                .In(ids)))
-            {
-                var results = query.Execute();
-                return strict 
-                    ? keys.Count() == results.Count() 
-                    : results.Any();
-            }
+            var count = collection.Count(Query.In("Id", keys.Select(key => new BsonValue(key))));
+            return strict ? count != 0 && count == keys.Count() : count != 0;
         }
 
         public Task<bool> ContainsKeysAsync(IEnumerable<Guid> keys, bool strict = true, CancellationToken token = default)
@@ -93,21 +80,9 @@ namespace Speechless.Infrastructure.Repositories.CouchbaseLite
         public Task<int> EraseAllAsync(IEnumerable<BusinessCard> models, CancellationToken token = default)
             => EraseAllByKeysAsync(models.Select(x => x.Id), token);
 
-        public int EraseAllByKeys(IEnumerable<Guid> keys)
-        {
-            var deletes = 0;
-            db.InBatch(() =>
-            {
-                foreach (var key in keys)
-                {
-                    var doc = db.GetDocument(key.ToString());
-                    if (doc == null) continue;
-                    db.Purge(doc);
-                    ++deletes;
-                }
-            });
-            return deletes;
-        }
+
+        public int EraseAllByKeys(IEnumerable<Guid> keys) 
+            => collection.Delete(Query.In("Id", keys.Select(key => new BsonValue(key))));
 
         public Task<int> EraseAllByKeysAsync(IEnumerable<Guid> keys, CancellationToken token = default)
         {
@@ -147,16 +122,7 @@ namespace Speechless.Infrastructure.Repositories.CouchbaseLite
             return tcs.Task;
         }
 
-        public bool EraseByKey(Guid key)
-        {
-            var doc = db.GetDocument(key.ToString());
-            if (doc != null)
-            {
-                db.Delete(doc, ConcurrencyControl.LastWriteWins);
-                return true;
-            }
-            return false;
-        }
+        public bool EraseByKey(Guid key) => collection.Delete(key);
 
         public Task<bool> EraseByKeyAsync(Guid key, CancellationToken token = default)
         {
@@ -179,28 +145,9 @@ namespace Speechless.Infrastructure.Repositories.CouchbaseLite
 
         public IEnumerable<BusinessCard> FindAll(Expression<Func<BusinessCard, bool>> predicate, bool? references = null, int? offset = null, int? count = null)
         {
-            var filter = predicate.AsExpression();
-            IResultSet results = null;
-            if (offset != null && count != null)
-            {
-                using (var query = QueryBuilder
-                    .Select(SelectResult.All())
-                    .From(DataSource.Database(db))
-                    .Where(filter)
-                    .Limit(cbExpression.Int(count.Value), cbExpression.Int(offset.Value)))
-                    results = query.Execute();
-            }
-            else
-            {
-                using (var query = QueryBuilder
-                    .Select(SelectResult.All())
-                    .From(DataSource.Database(db))
-                    .Where(filter))
-                    results = query.Execute();
-            }
-            return results != null
-                ? results.Select(result => result.GetDictionary(db.Name).AsBusinessCard(serializer))
-                : Enumerable.Empty<BusinessCard>();
+            return offset != null && offset != null 
+                ? collection.Find(predicate, offset.Value, count.Value)
+                : collection.Find(predicate);
         }
 
         public Task<IEnumerable<BusinessCard>> FindAllAsync(Expression<Func<BusinessCard, bool>> predicate, bool? references = null, int? offset = null, int? count = null, CancellationToken token = default)
@@ -223,7 +170,11 @@ namespace Speechless.Infrastructure.Repositories.CouchbaseLite
         }
 
         public IEnumerable<BusinessCard> FindAllByKeys(IEnumerable<Guid> keys, bool? references = null, int? offset = null, int? count = null)
-            => FindAll(x => keys.Contains(x.Id), references, offset, count);
+        {
+            return offset != null && offset != null
+                ? collection.Find(Query.In("Id", keys.Select(key => new BsonValue(key))), offset.Value, count.Value)
+                : collection.Find(Query.In("Id", keys.Select(key => new BsonValue(key))));
+        }
 
         public Task<IEnumerable<BusinessCard>> FindAllByKeysAsync(IEnumerable<Guid> keys, bool? references = null, int? offset = null, int? count = null, CancellationToken token = default)
         {
@@ -244,11 +195,7 @@ namespace Speechless.Infrastructure.Repositories.CouchbaseLite
             return tcs.Task;
         }
 
-        public BusinessCard FindByKey(Guid key, bool? references = null)
-        {
-            var doc = db.GetDocument(key.ToString());
-            return doc != null ? doc.AsBusinessCard(serializer) : default;
-        }
+        public BusinessCard FindByKey(Guid key, bool? references = null) => collection.FindById(key);
 
         public Task<BusinessCard> FindByKeyAsync(Guid key, bool? references = null, CancellationToken token = default)
         {
@@ -270,7 +217,12 @@ namespace Speechless.Infrastructure.Repositories.CouchbaseLite
         }
 
         public IEnumerable<BusinessCard> Get(bool? references = null, int? offset = null, int? count = null)
-            => FindAll(x => true, references, offset, count);
+        {
+            var matches = collection.FindAll();
+            return offset != null && count != null
+                ? matches.Skip(offset.Value).Take(offset.Value)
+                : matches;
+        }
 
         public Task<IEnumerable<BusinessCard>> GetAsync(bool? references = null, int? offset = null, int? count = null, CancellationToken token = default)
         {
@@ -293,25 +245,10 @@ namespace Speechless.Infrastructure.Repositories.CouchbaseLite
 
         public IEnumerable<Guid> GetKeys(int? offset = null, int? count = null)
         {
-            IResultSet results = null;
-            if (offset != null && count != null)
-            {
-                using (var query = QueryBuilder
-                    .Select(SelectResult.Property("Id"))
-                    .From(DataSource.Database(db))
-                    .Limit(cbExpression.Int(count.Value), cbExpression.Int(offset.Value)))
-                    results = query.Execute();
-            }
-            else
-            {
-                using (var query = QueryBuilder
-                    .Select(SelectResult.Property("Id"))
-                    .From(DataSource.Database(db)))
-                    results = query.Execute();
-            }
-            return results != null
-                ? results.Select(result => result.GetDictionary(db.Name).As(serializer))
-                : Enumerable.Empty<BusinessCard>();
+            var matches = collection.FindAll().Select(x => x.Id);
+            return offset != null && count != null
+                ? matches.Skip(offset.Value).Take(offset.Value)
+                : matches;
         }
 
         public Task<IEnumerable<Guid>> GetKeysAsync(int? offset = null, int? count = null, CancellationToken token = default)
@@ -333,11 +270,13 @@ namespace Speechless.Infrastructure.Repositories.CouchbaseLite
             return tcs.Task;
         }
 
-        public void Register(BusinessCard model, bool? references = null) => model.Id = generator.GetNext();
+        public void Register(BusinessCard model, bool? references = null)
+            => model.Id = generator.GetNext();
 
         public void RegisterAll(IEnumerable<BusinessCard> models, bool? references = null, int? offset = null, int? count = null)
         {
-            foreach (var model in models) Register(model, references);
+            foreach (var model in models)
+                Register(model, references);
         }
 
         public Task RegisterAllAsync(IEnumerable<BusinessCard> models, bool? references = null, int? offset = null, int? count = null, CancellationToken cancellation = default)
@@ -438,26 +377,17 @@ namespace Speechless.Infrastructure.Repositories.CouchbaseLite
 
         public bool Save(BusinessCard model, bool references = true)
         {
-            var serializer = new JilTextSerializer();
-            var content = serializer.Serialize(model);
-            using (var doc = new MutableDocument(model.Id.ToString()))
+            var inserted = false;
+            using (var scope = TransactionScopeOption.Required.CreateTransactionScope())
             {
-                doc.SetString("content", content);
+                collection.Upsert(model.Id, model);
+                scope.Complete();
             }
+            return inserted;
         }
 
         public int SaveAll(IEnumerable<BusinessCard> models, bool references = true)
         {
-            db.InBatch(() =>
-            {
-                foreach (var key in keys)
-                {
-                    var doc = db.GetDocument(key.ToString());
-                    if (doc == null) continue;
-                    db.Purge(doc);
-                    ++deletes;
-                }
-            });
             throw new NotImplementedException();
         }
 
@@ -468,67 +398,109 @@ namespace Speechless.Infrastructure.Repositories.CouchbaseLite
 
         public Task<bool> SaveAsync(BusinessCard model, bool references = true, CancellationToken token = default)
         {
-            throw new NotImplementedException();
+            var inserted = false;
+            using (var scope = TransactionScopeOption.Required.CreateTransactionScopeFlow())
+            {
+                inserted = collection.Upsert(model.Id, model);
+                scope.Complete();
+            }
+            return Task.FromResult(inserted);
         }
 
         public void Trash(BusinessCard model, bool? references = null)
         {
-            throw new NotImplementedException();
+            model.IsDeleted = true;
+            Save(model, references ?? false);
         }
 
         public void TrashAll(IEnumerable<BusinessCard> models, bool? references = null)
         {
-            throw new NotImplementedException();
+            foreach (var model in models) model.IsDeleted = true;
+            SaveAll(models, references ?? false);
         }
 
         public Task TrashAllAsync(IEnumerable<BusinessCard> models, bool? references = null, CancellationToken token = default)
         {
-            throw new NotImplementedException();
+            foreach (var model in models) model.IsDeleted = true;
+            return SaveAllAsync(models, references ?? false, token);
         }
 
         public IEnumerable<BusinessCard> TrashAllByKeys(IEnumerable<Guid> keys, bool? references = null, int? offset = null, int? count = null)
         {
-            throw new NotImplementedException();
+            var matches = FindAllByKeys(keys, references, offset, count);
+            if (matches.Any()) TrashAll(matches, references);
+            return matches;
         }
 
-        public Task<IEnumerable<BusinessCard>> TrashAllByKeysAsync(IEnumerable<Guid> keys, bool? references = null, int? offset = null, int? count = null, CancellationToken token = default)
+        public async Task<IEnumerable<BusinessCard>> TrashAllByKeysAsync(IEnumerable<Guid> keys, bool? references = null, int? offset = null, int? count = null, CancellationToken token = default)
         {
-            throw new NotImplementedException();
+            var matches = await FindAllByKeysAsync(keys, references, offset, count, token).ConfigureAwait(false);
+            if (matches.Any()) await TrashAllAsync(matches, references, token).ConfigureAwait(false);
+            return matches;
         }
 
         public Task TrashAsync(BusinessCard model, bool? references = null)
         {
-            throw new NotImplementedException();
+            model.IsDeleted = true;
+            return SaveAsync(model, references ?? false);
         }
 
         public BusinessCard TrashByKey(Guid key, bool? references = null)
         {
-            throw new NotImplementedException();
+            var match = FindByKey(key, references);
+            if (match != null) Trash(match, references);
+            return match;
         }
 
-        public Task<BusinessCard> TrashByKeyAsync(Guid key, bool? references = null, CancellationToken token = default)
+        public async Task<BusinessCard> TrashByKeyAsync(Guid key, bool? references = null, CancellationToken token = default)
         {
-            throw new NotImplementedException();
+            var match = await FindByKeyAsync(key, references).ConfigureAwait(false);
+            if (match != null) await TrashAsync(match, references).ConfigureAwait(false);
+            return match;
         }
 
         public void Unregister(BusinessCard model, bool? references = null)
         {
-            throw new NotImplementedException();
+            var exists = ContainsKey(model.Id);
+            if (!exists) model.Id = generator.GetNullKey();
         }
 
         public void UnregisterAll(IEnumerable<BusinessCard> models, bool? references = null, int? offset = null, int? count = null)
         {
-            throw new NotImplementedException();
+            var keys = models.Select(x => x.Id);
+            var matches = FindAllByKeys(keys, references, offset, count);
+            var nonmatches = models.Except(matches);
+            foreach (var nonmatch in nonmatches)
+                nonmatch.Id = generator.GetNullKey();
         }
 
-        public Task UnregisterAllAsync(IEnumerable<BusinessCard> models, bool? references = null, int? offset = null, int? count = null, CancellationToken cancellation = default)
+        public async Task UnregisterAllAsync(IEnumerable<BusinessCard> models, bool? references = null, int? offset = null, int? count = null, CancellationToken cancellation = default)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var keys = models.Select(x => x.Id);
+                var matches = await FindAllByKeysAsync(keys, references, offset, count, cancellation).ConfigureAwait(false);
+                var nonmatches = models.Except(matches);
+                foreach (var nonmatch in nonmatches)
+                {
+                    cancellation.ThrowIfCancellationRequested();
+                    nonmatch.Id = generator.GetNullKey();
+                }
+            }
+            catch (OperationCanceledException)
+            {
+                await Task.FromCanceled(cancellation);
+            }
+            catch (Exception ex)
+            {
+                await Task.FromException(ex);
+            }
         }
 
-        public Task UnregisterAsync(BusinessCard model, bool? references = null, CancellationToken cancellation = default)
+        public async Task UnregisterAsync(BusinessCard model, bool? references = null, CancellationToken cancellation = default)
         {
-            throw new NotImplementedException();
+            var exists = await ContainsKeyAsync(model.Id, cancellation).ConfigureAwait(false);
+            if (!exists) model.Id = generator.GetNullKey();
         }
     }
 }

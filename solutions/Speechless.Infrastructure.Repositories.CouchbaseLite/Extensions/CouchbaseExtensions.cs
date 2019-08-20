@@ -1,7 +1,6 @@
 ﻿using Couchbase.Lite;
 using Couchbase.Lite.Query;
 using reexmonkey.xmisc.core.io.serializers;
-using Reflektiv.Speechless.Core.Domain.Concretes.Models;
 using Speechless.Infrastructure.Repositories.CouchbaseLite.Helpers;
 using System;
 using System.Linq.Expressions;
@@ -11,21 +10,21 @@ namespace Speechless.Infrastructure.Repositories.CouchbaseLite.Extensions
     public static class CouchbaseExtensions
     {
         public static IExpression AsExpression<TResult>(this Expression<Func<TResult, bool>> predicate)
-            => Visitor.CreateFromExpression(predicate.Body).Visit();
+            => VisitorBase.CreateFromExpression(predicate).Visit();
 
-        public static BusinessCard AsBusinessCard(this DictionaryObject map, TextSerializerBase serializer)
+        public static T AsModel<T>(this Document document, TextSerializerBase serializer)
         {
-            var json = map.GetString(nameof(BusinessCard));
+            var json = serializer.Serialize(document);
             return !string.IsNullOrEmpty(json)
-                ? json.AsModel<BusinessCard>(serializer)
+                ? json.AsModel<T>(serializer)
                 : default;
         }
 
-        public static BusinessCard AsBusinessCard(this Document document, TextSerializerBase serializer)
+        public static T AsModel<T>(this DictionaryObject map, TextSerializerBase serializer)
         {
-            var content = serializer.Serialize(document.GetString(nameof(BusinessCard)));
-            return !string.IsNullOrEmpty(content)
-                ? content.AsModel<BusinessCard>(serializer)
+            var json = serializer.Serialize(map.ToDictionary());
+            return !string.IsNullOrEmpty(json)
+                ? json.AsModel<T>(serializer)
                 : default;
         }
 
