@@ -10,7 +10,7 @@ namespace Reflektiv.Speechless.Core.Domain.Concretes.Models
     /// <summary>
     /// Represents a business card.
     /// </summary>
-    public class BusinessCard : VCard, IBusinessCard, IHasId<Guid>, ITemporal, ITrash
+    public class BusinessCard : VCard, IBusinessCard, IHasId<Guid>, ITemporal, ITrash, IEquatable<BusinessCard>
     {
         /// <summary>
         /// Gets or sets the unique identifier of the business card.
@@ -121,5 +121,42 @@ namespace Reflektiv.Speechless.Core.Domain.Concretes.Models
             if (other is ITemporal temporal) Effective = temporal.Effective;
             if (other is ITrash trashable) IsDeleted = trashable.IsDeleted;
         }
+
+        public bool Equals(BusinessCard other)
+        {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return Id.Equals(other.Id);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(this, obj)) return true;
+            if (ReferenceEquals(obj, null)) return false;
+            return obj is BusinessCard && Equals((BusinessCard)obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return 2108858624 + EqualityComparer<Guid>.Default.GetHashCode(Id);
+        }
+
+        /// <summary>
+        /// Determines if the <paramref name="first"/> instance of <see cref="BusinessCard"/> is equal to the <paramref name="second"/>.
+        /// </summary>
+        /// <param name="first">The first instance to check for equality.</param>
+        /// <param name="second">The second instance to check for equality.</param>
+        /// <returns>true if both instances are equal to each other; otherwise false.</returns>
+        public static bool operator ==(BusinessCard first, BusinessCard second)
+            => EqualityComparer<BusinessCard>.Default.Equals(first, second);
+
+        /// <summary>
+        /// Determines if the <paramref name="first"/> instance of <see cref="Risiko"/> is not equal to the <paramref name="second"/>.
+        /// </summary>
+        /// <param name="first">The first instance to check for inequality.</param>
+        /// <param name="second">The second instance to check for inequality.</param>
+        /// <returns>true if both instances are not equal to each other; otherwise false.</returns>
+        public static bool operator !=(BusinessCard first, BusinessCard second)
+            => !EqualityComparer<BusinessCard>.Default.Equals(first, second);
     }
 }
