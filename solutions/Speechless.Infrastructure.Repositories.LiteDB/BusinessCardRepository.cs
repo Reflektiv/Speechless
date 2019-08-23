@@ -16,18 +16,23 @@ namespace Speechless.Infrastructure.Repositories.LiteDB
     public class BusinessCardRepository : IBusinessCardRepository
     {
         private readonly IKeyGenerator<SequentialGuid> generator;
-        private readonly LiteDatabase db;
-        private readonly LiteCollection<BusinessCard> collection;
+        private readonly LiteCollection<BusinessCard> cards;
+        private const string KeyField = "_id";
 
 
         public BusinessCardRepository(IKeyGenerator<SequentialGuid> generator, LiteDatabase db)
         {
             this.generator = generator ?? throw new ArgumentNullException(nameof(generator));
-            this.db = db ?? throw new ArgumentNullException(nameof(db));
-            collection = db.GetCollection<BusinessCard>();
+            if (db is null) throw new ArgumentNullException(nameof(db));
+
+            cards = db.GetCollection<BusinessCard>();
+            cards.EnsureIndexes();
         }
 
-        public bool ContainsKey(Guid key) => collection.Exists(Query.EQ("Id", key));
+        public bool ContainsKey(Guid key)
+        {
+            return cards.Exists(Query.EQ(KeyField, key));
+        }
 
         public Task<bool> ContainsKeyAsync(Guid key, CancellationToken token = default)
         {
@@ -50,7 +55,7 @@ namespace Speechless.Infrastructure.Repositories.LiteDB
 
         public bool ContainsKeys(IEnumerable<Guid> keys, bool strict = true)
         {
-            var count = collection.Count(Query.In("Id", keys.Select(key => new BsonValue(key))));
+            var count = cards.Count(Query.In(KeyField, keys.Select(key => new BsonValue(key))));
             return strict ? count != 0 && count == keys.Count() : count != 0;
         }
 
@@ -80,9 +85,8 @@ namespace Speechless.Infrastructure.Repositories.LiteDB
         public Task<int> EraseAllAsync(IEnumerable<BusinessCard> models, CancellationToken token = default)
             => EraseAllByKeysAsync(models.Select(x => x.Id), token);
 
-
-        public int EraseAllByKeys(IEnumerable<Guid> keys) 
-            => collection.Delete(Query.In("Id", keys.Select(key => new BsonValue(key))));
+        public int EraseAllByKeys(IEnumerable<Guid> keys)
+            => cards.Delete(Query.In(KeyField, keys.Select(key => new BsonValue(key))));
 
         public Task<int> EraseAllByKeysAsync(IEnumerable<Guid> keys, CancellationToken token = default)
         {
@@ -122,7 +126,7 @@ namespace Speechless.Infrastructure.Repositories.LiteDB
             return tcs.Task;
         }
 
-        public bool EraseByKey(Guid key) => collection.Delete(key);
+        public bool EraseByKey(Guid key) => cards.Delete(key);
 
         public Task<bool> EraseByKeyAsync(Guid key, CancellationToken token = default)
         {
@@ -145,9 +149,9 @@ namespace Speechless.Infrastructure.Repositories.LiteDB
 
         public IEnumerable<BusinessCard> FindAll(Expression<Func<BusinessCard, bool>> predicate, bool? references = null, int? offset = null, int? count = null)
         {
-            return offset != null && offset != null 
-                ? collection.Find(predicate, offset.Value, count.Value)
-                : collection.Find(predicate);
+            return offset != null && offset != null
+                ? cards.Find(predicate, offset.Value, count.Value)
+                : cards.Find(predicate);
         }
 
         public Task<IEnumerable<BusinessCard>> FindAllAsync(Expression<Func<BusinessCard, bool>> predicate, bool? references = null, int? offset = null, int? count = null, CancellationToken token = default)
@@ -172,8 +176,8 @@ namespace Speechless.Infrastructure.Repositories.LiteDB
         public IEnumerable<BusinessCard> FindAllByKeys(IEnumerable<Guid> keys, bool? references = null, int? offset = null, int? count = null)
         {
             return offset != null && offset != null
-                ? collection.Find(Query.In("Id", keys.Select(key => new BsonValue(key))), offset.Value, count.Value)
-                : collection.Find(Query.In("Id", keys.Select(key => new BsonValue(key))));
+                ? cards.Find(Query.In(KeyField, keys.Select(key => new BsonValue(key))), offset.Value, count.Value)
+                : cards.Find(Query.In(KeyField, keys.Select(key => new BsonValue(key))));
         }
 
         public Task<IEnumerable<BusinessCard>> FindAllByKeysAsync(IEnumerable<Guid> keys, bool? references = null, int? offset = null, int? count = null, CancellationToken token = default)
@@ -195,7 +199,7 @@ namespace Speechless.Infrastructure.Repositories.LiteDB
             return tcs.Task;
         }
 
-        public BusinessCard FindByKey(Guid key, bool? references = null) => collection.FindById(key);
+        public BusinessCard FindByKey(Guid key, bool? references = null) => cards.FindById(key);
 
         public Task<BusinessCard> FindByKeyAsync(Guid key, bool? references = null, CancellationToken token = default)
         {
@@ -218,7 +222,7 @@ namespace Speechless.Infrastructure.Repositories.LiteDB
 
         public IEnumerable<BusinessCard> Get(bool? references = null, int? offset = null, int? count = null)
         {
-            var matches = collection.FindAll();
+            var matches = cards.FindAll();
             return offset != null && count != null
                 ? matches.Skip(offset.Value).Take(offset.Value)
                 : matches;
@@ -245,7 +249,7 @@ namespace Speechless.Infrastructure.Repositories.LiteDB
 
         public IEnumerable<Guid> GetKeys(int? offset = null, int? count = null)
         {
-            var matches = collection.FindAll().Select(x => x.Id);
+            var matches = cards.FindAll().Select(x => x.Id);
             return offset != null && count != null
                 ? matches.Skip(offset.Value).Take(offset.Value)
                 : matches;
@@ -377,34 +381,73 @@ namespace Speechless.Infrastructure.Repositories.LiteDB
 
         public bool Save(BusinessCard model, bool references = true)
         {
-            var inserted = false;
+            var upserted = false;
             using (var scope = TransactionScopeOption.Required.CreateTransactionScope())
             {
-                collection.Upsert(model.Id, model);
+                upserted = cards.Upsert(model);
                 scope.Complete();
             }
-            return inserted;
+            return upserted;
         }
 
         public int SaveAll(IEnumerable<BusinessCard> models, bool references = true)
         {
-            throw new NotImplementedException();
+            var saved = 0;
+            using (var scope = TransactionScopeOption.Required.CreateTransactionScope())
+            {
+                saved = cards.Upsert(models);
+                scope.Complete();
+            }
+            return saved;
         }
 
         public Task<int> SaveAllAsync(IEnumerable<BusinessCard> models, bool references = true, CancellationToken token = default)
         {
-            throw new NotImplementedException();
+            var exceptions = new List<Exception>();
+            var saved = 0;
+            try
+            {
+                using (var scope = TransactionScopeOption.Required.CreateTransactionScopeFlow())
+                {
+                    token.ThrowIfCancellationRequested();
+                    saved = cards.Upsert(models);
+                    scope.Complete();
+                }
+            }
+            catch (OperationCanceledException ex)
+            {
+                exceptions.Add(ex);
+            }
+            catch (Exception ex)
+            {
+                exceptions.Add(ex);
+            }
+            if (exceptions.Any()) throw new AggregateException(exceptions);
+            return Task.FromResult(saved);
         }
 
         public Task<bool> SaveAsync(BusinessCard model, bool references = true, CancellationToken token = default)
         {
-            var inserted = false;
-            using (var scope = TransactionScopeOption.Required.CreateTransactionScopeFlow())
+            var exceptions = new List<Exception>();
+            var saved = false;
+            try
             {
-                inserted = collection.Upsert(model.Id, model);
-                scope.Complete();
+                using (var scope = TransactionScopeOption.Required.CreateTransactionScopeFlow())
+                {
+                    saved = cards.Upsert(model.Id, model);
+                    scope.Complete();
+                }
             }
-            return Task.FromResult(inserted);
+            catch (OperationCanceledException ex)
+            {
+                exceptions.Add(ex);
+            }
+            catch (Exception ex)
+            {
+                exceptions.Add(ex);
+            }
+            if (exceptions.Any()) throw new AggregateException(exceptions);
+            return Task.FromResult(saved);
         }
 
         public void Trash(BusinessCard model, bool? references = null)
