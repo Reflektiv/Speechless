@@ -259,3 +259,4 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+/solutions/Speechless.Infrastructure.Repositories.Tests/Data/test.db

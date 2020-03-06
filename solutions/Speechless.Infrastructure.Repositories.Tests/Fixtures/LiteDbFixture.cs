@@ -11,7 +11,7 @@ using System.Text;
 
 namespace Reflektiv.Speechless.Infrastructure.Repositories.Tests.Fixtures
 {
-    public class LiteDbFixture: FixtureBase, IDisposable
+    public class LiteDbFixture : FixtureBase, IDisposable
     {
         private readonly LiteDatabase database;
         private readonly IKeyGenerator<SequentialGuid> generator;
@@ -31,7 +31,7 @@ namespace Reflektiv.Speechless.Infrastructure.Repositories.Tests.Fixtures
             var collections = database.GetCollectionNames().ToList();
             for (int i = 0; i < collections.Count; i++)
             {
-                database.Engine.DropCollection(collections[i]);
+                database.DropCollection(collections[i]);
             }
         }
 

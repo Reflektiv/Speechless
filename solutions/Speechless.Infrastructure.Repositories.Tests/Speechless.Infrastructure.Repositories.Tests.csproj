@@ -9,8 +9,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Faker.NETCore" Version="1.0.1" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
+    <None Remove="Data\test.db" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Faker.NETCore" Version="1.0.2" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
     <PackageReference Include="xmisc.core.linq" Version="4.1.17-beta" />
     <PackageReference Include="xmisc.core.reflection" Version="4.0.71-alpha" />
     <PackageReference Include="xunit" Version="2.4.1" />

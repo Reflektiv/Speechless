@@ -12,7 +12,7 @@ namespace Reflektiv.Speechless.Infrastructure.Repositories.Tests.Fixtures
 {
     public abstract class FixtureBase
     {
-        protected const string DATA = "data";
+        protected const string DATA = "Data";
         protected const string OUTPUT = "Output";
         protected const string PHOTO = "open-xamarin.png";
 
@@ -43,7 +43,7 @@ namespace Reflektiv.Speechless.Infrastructure.Repositories.Tests.Fixtures
 
         public Uri GenerateUri()
         {
-            return new Uri ($"https://{Faker.Internet.DomainName()}.{Faker.Internet.DomainSuffix()}", UriKind.RelativeOrAbsolute);
+            return new Uri($"https://{Faker.Internet.DomainName()}.{Faker.Internet.DomainSuffix()}", UriKind.RelativeOrAbsolute);
         }
 
         public Impp GenerateImpp()
@@ -140,11 +140,11 @@ namespace Reflektiv.Speechless.Infrastructure.Repositories.Tests.Fixtures
                 BirthDay = Faker.RandomNumber.Next(0, 1) == 1 ? Faker.DateOfBirth.Next() : (DateTime?)null,
                 Emails = GenerateModels(GenerateEmail, Faker.RandomNumber.Next(0, 10)),
                 Mailer = Faker.Internet.Email(),
-                Photo = Faker.RandomNumber.Next(0, 1) == 1 ? GetPhoto() : default 
+                Photo = Faker.RandomNumber.Next(0, 1) == 1 ? GetPhoto() : default
             };
         }
 
-        public List<BusinessCard> GenerateBusinessCards() 
+        public List<BusinessCard> GenerateBusinessCards()
             => GenerateModels(GenerateBusinessCard, Faker.RandomNumber.Next(2, 10));
 
         private static List<T> GenerateModels<T>(Func<T> ctor, int count)

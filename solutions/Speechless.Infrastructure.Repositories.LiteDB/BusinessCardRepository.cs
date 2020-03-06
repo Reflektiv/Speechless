@@ -16,9 +16,8 @@ namespace Speechless.Infrastructure.Repositories.LiteDB
     public class BusinessCardRepository : IBusinessCardRepository
     {
         private readonly IKeyGenerator<SequentialGuid> generator;
-        private readonly LiteCollection<BusinessCard> cards;
+        private readonly ILiteCollection<BusinessCard> cards;
         private const string KeyField = "_id";
-
 
         public BusinessCardRepository(IKeyGenerator<SequentialGuid> generator, LiteDatabase db)
         {
@@ -26,7 +25,7 @@ namespace Speechless.Infrastructure.Repositories.LiteDB
             if (db is null) throw new ArgumentNullException(nameof(db));
 
             cards = db.GetCollection<BusinessCard>();
-            cards.EnsureIndexes();
+            cards.EnsureIndex("Name", x => new[] { x.FirstName, x.MiddleName, x.LastName });
         }
 
         public bool ContainsKey(Guid key)
@@ -86,7 +85,7 @@ namespace Speechless.Infrastructure.Repositories.LiteDB
             => EraseAllByKeysAsync(models.Select(x => x.Id), token);
 
         public int EraseAllByKeys(IEnumerable<Guid> keys)
-            => cards.Delete(Query.In(KeyField, keys.Select(key => new BsonValue(key))));
+            => cards.DeleteMany(Query.In(KeyField, keys.Select(key => new BsonValue(key))));
 
         public Task<int> EraseAllByKeysAsync(IEnumerable<Guid> keys, CancellationToken token = default)
         {
