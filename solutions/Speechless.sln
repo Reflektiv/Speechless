@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.28729.10
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32819.101
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01 - Core", "01 - Core", "{1126BA4D-5F34-424A-B55C-6533E3DF17A1}"
 EndProject
@@ -9,7 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02 - Infrastructure", "02 -
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03 - Mobile", "03 - Mobile", "{18835FAB-212D-4ADB-85DD-61C7C1381275}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "04 - Tests", "04 - Tests", "{85A507F9-36F7-4498-9F04-C3E14DFD6ACA}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "05 - Tests", "05 - Tests", "{85A507F9-36F7-4498-9F04-C3E14DFD6ACA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01 - Domain", "01 - Domain", "{49AA4BAD-3B98-49DD-8392-073AC3115C09}"
 EndProject
@@ -42,6 +42,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Speechless.Infrastructure.Services.Tests", "Speechless.Infrastructure.Services.Tests\Speechless.Infrastructure.Services.Tests.csproj", "{2179537E-8FA7-469E-88D7-32560D989FE6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Speechless.Infrastructure.Repositories.LiteDB", "Speechless.Infrastructure.Repositories.LiteDB\Speechless.Infrastructure.Repositories.LiteDB.csproj", "{B473C8B2-1FF8-47BF-81AF-A84A068C63F5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "04 - Presentation", "04 - Presentation", "{C2D19220-0702-4170-AF8D-C208B9739FA0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpeechlessApp", "SpeechlessApp\SpeechlessApp.csproj", "{B0CFAC06-5D4E-4319-BBCE-B9BF755EF5F4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -173,6 +177,24 @@ Global
 		{B473C8B2-1FF8-47BF-81AF-A84A068C63F5}.Release|iPhone.Build.0 = Release|Any CPU
 		{B473C8B2-1FF8-47BF-81AF-A84A068C63F5}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
 		{B473C8B2-1FF8-47BF-81AF-A84A068C63F5}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{B0CFAC06-5D4E-4319-BBCE-B9BF755EF5F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0CFAC06-5D4E-4319-BBCE-B9BF755EF5F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0CFAC06-5D4E-4319-BBCE-B9BF755EF5F4}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{B0CFAC06-5D4E-4319-BBCE-B9BF755EF5F4}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{B0CFAC06-5D4E-4319-BBCE-B9BF755EF5F4}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{B0CFAC06-5D4E-4319-BBCE-B9BF755EF5F4}.Debug|iPhone.Deploy.0 = Debug|Any CPU
+		{B0CFAC06-5D4E-4319-BBCE-B9BF755EF5F4}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{B0CFAC06-5D4E-4319-BBCE-B9BF755EF5F4}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{B0CFAC06-5D4E-4319-BBCE-B9BF755EF5F4}.Debug|iPhoneSimulator.Deploy.0 = Debug|Any CPU
+		{B0CFAC06-5D4E-4319-BBCE-B9BF755EF5F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0CFAC06-5D4E-4319-BBCE-B9BF755EF5F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0CFAC06-5D4E-4319-BBCE-B9BF755EF5F4}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{B0CFAC06-5D4E-4319-BBCE-B9BF755EF5F4}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{B0CFAC06-5D4E-4319-BBCE-B9BF755EF5F4}.Release|iPhone.Build.0 = Release|Any CPU
+		{B0CFAC06-5D4E-4319-BBCE-B9BF755EF5F4}.Release|iPhone.Deploy.0 = Release|Any CPU
+		{B0CFAC06-5D4E-4319-BBCE-B9BF755EF5F4}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{B0CFAC06-5D4E-4319-BBCE-B9BF755EF5F4}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{B0CFAC06-5D4E-4319-BBCE-B9BF755EF5F4}.Release|iPhoneSimulator.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -194,6 +216,7 @@ Global
 		{922A2C64-582F-4F84-AD3E-6BD04E1903BA} = {85A507F9-36F7-4498-9F04-C3E14DFD6ACA}
 		{2179537E-8FA7-469E-88D7-32560D989FE6} = {85A507F9-36F7-4498-9F04-C3E14DFD6ACA}
 		{B473C8B2-1FF8-47BF-81AF-A84A068C63F5} = {F6E506E7-16E4-4767-932D-AB3B24393855}
+		{B0CFAC06-5D4E-4319-BBCE-B9BF755EF5F4} = {C2D19220-0702-4170-AF8D-C208B9739FA0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1D9D8190-0E56-4CEB-A51B-289B8A0C8E9B}
