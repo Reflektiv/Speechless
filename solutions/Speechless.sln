@@ -7,8 +7,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01 - Core", "01 - Core", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02 - Infrastructure", "02 - Infrastructure", "{303031E2-2B5C-4982-AF59-6450497D7B52}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03 - Mobile", "03 - Mobile", "{18835FAB-212D-4ADB-85DD-61C7C1381275}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "05 - Tests", "05 - Tests", "{85A507F9-36F7-4498-9F04-C3E14DFD6ACA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01 - Domain", "01 - Domain", "{49AA4BAD-3B98-49DD-8392-073AC3115C09}"
@@ -22,8 +20,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02 - Migrations", "02 - Migrations", "{6D54F1E4-40F3-4C16-986D-703DA106B9DB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03 - Services", "03 - Services", "{150B94BF-EC59-4655-B49D-9B069039A470}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Speechless.Core.Domain.Contracts", "Speechless.Core.Domain.Contracts\Speechless.Core.Domain.Contracts.csproj", "{BB483955-9B15-4FAC-8B6B-0610DB13A075}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Speechless.Core.Domain.Concretes", "Speechless.Core.Domain.Concretes\Speechless.Core.Domain.Concretes.csproj", "{B17F87F2-EBE6-46FC-B881-481E6FCFF85D}"
 EndProject
@@ -43,9 +39,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Speechless.Infrastructure.S
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Speechless.Infrastructure.Repositories.LiteDB", "Speechless.Infrastructure.Repositories.LiteDB\Speechless.Infrastructure.Repositories.LiteDB.csproj", "{B473C8B2-1FF8-47BF-81AF-A84A068C63F5}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "04 - Presentation", "04 - Presentation", "{C2D19220-0702-4170-AF8D-C208B9739FA0}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03 - Presentation", "03 - Presentation", "{C2D19220-0702-4170-AF8D-C208B9739FA0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpeechlessApp", "SpeechlessApp\SpeechlessApp.csproj", "{B0CFAC06-5D4E-4319-BBCE-B9BF755EF5F4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpeechlessApp", "SpeechlessApp\SpeechlessApp.csproj", "{B0CFAC06-5D4E-4319-BBCE-B9BF755EF5F4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,18 +53,6 @@ Global
 		Release|iPhoneSimulator = Release|iPhoneSimulator
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{BB483955-9B15-4FAC-8B6B-0610DB13A075}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BB483955-9B15-4FAC-8B6B-0610DB13A075}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BB483955-9B15-4FAC-8B6B-0610DB13A075}.Debug|iPhone.ActiveCfg = Debug|Any CPU
-		{BB483955-9B15-4FAC-8B6B-0610DB13A075}.Debug|iPhone.Build.0 = Debug|Any CPU
-		{BB483955-9B15-4FAC-8B6B-0610DB13A075}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
-		{BB483955-9B15-4FAC-8B6B-0610DB13A075}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
-		{BB483955-9B15-4FAC-8B6B-0610DB13A075}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BB483955-9B15-4FAC-8B6B-0610DB13A075}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BB483955-9B15-4FAC-8B6B-0610DB13A075}.Release|iPhone.ActiveCfg = Release|Any CPU
-		{BB483955-9B15-4FAC-8B6B-0610DB13A075}.Release|iPhone.Build.0 = Release|Any CPU
-		{BB483955-9B15-4FAC-8B6B-0610DB13A075}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
-		{BB483955-9B15-4FAC-8B6B-0610DB13A075}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 		{B17F87F2-EBE6-46FC-B881-481E6FCFF85D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B17F87F2-EBE6-46FC-B881-481E6FCFF85D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B17F87F2-EBE6-46FC-B881-481E6FCFF85D}.Debug|iPhone.ActiveCfg = Debug|Any CPU
@@ -206,7 +190,6 @@ Global
 		{F6E506E7-16E4-4767-932D-AB3B24393855} = {303031E2-2B5C-4982-AF59-6450497D7B52}
 		{6D54F1E4-40F3-4C16-986D-703DA106B9DB} = {303031E2-2B5C-4982-AF59-6450497D7B52}
 		{150B94BF-EC59-4655-B49D-9B069039A470} = {303031E2-2B5C-4982-AF59-6450497D7B52}
-		{BB483955-9B15-4FAC-8B6B-0610DB13A075} = {49AA4BAD-3B98-49DD-8392-073AC3115C09}
 		{B17F87F2-EBE6-46FC-B881-481E6FCFF85D} = {49AA4BAD-3B98-49DD-8392-073AC3115C09}
 		{5B97219C-BEC6-4858-B4EC-2EA71FDDF024} = {8757C008-45BE-4376-9CCB-F1A98657B6C2}
 		{17964490-BA75-4D67-90A8-69861FEFE53C} = {D1D100A0-F462-42BA-9F37-6A1B21484E03}

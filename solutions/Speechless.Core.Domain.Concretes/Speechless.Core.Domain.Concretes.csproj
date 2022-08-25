@@ -1,21 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <RootNamespace>Reflektiv.Speechless.Core.Domain.Concretes</RootNamespace>
+	  <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="Models\VCardAddress.cs" />
-    <Compile Remove="Models\VCardCustomExtension.cs" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="MixERP.Net.VCards" Version="1.0.7" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Speechless.Core.Domain.Contracts\Speechless.Core.Domain.Contracts.csproj" />
+    <PackageReference Include="ServiceStack.Api.OpenApi" Version="6.2.0" />
   </ItemGroup>
 
 </Project>
