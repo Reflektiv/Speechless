@@ -10,6 +10,7 @@
   <ItemGroup>
     <PackageReference Include="MixERP.Net.VCards" Version="1.0.7" />
     <PackageReference Include="ServiceStack.Api.OpenApi" Version="6.2.0" />
+    <PackageReference Include="xmisc.core.system.xmltools" Version="8.2.5" />
   </ItemGroup>
 
 </Project>
