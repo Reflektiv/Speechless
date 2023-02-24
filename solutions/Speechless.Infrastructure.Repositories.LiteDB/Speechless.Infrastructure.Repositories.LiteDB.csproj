@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="LiteDB" Version="5.0.12" />
+    <PackageReference Include="LiteDB" Version="5.0.13" />
     <PackageReference Include="xmisc.backbone.identitifiers.concretes" Version="8.2.11" />
   </ItemGroup>
 
